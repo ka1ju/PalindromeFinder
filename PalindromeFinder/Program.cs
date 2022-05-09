@@ -27,48 +27,41 @@ namespace ForFindPalindromes
         {
             if (text != "" && text != null)
             {
-                char[] ArrayString = text.ToCharArray();
-
-                char[] Palindrome = { ArrayString[0] };
-
-                char[] part;
-
-                for (int j = ArrayString.Length, k = 0; j > 0; j -= 2, k++)
+                int textLength = text.Length;
+                string palindrome = text[0..1];
+                for (int i = 0; i < textLength; i++)
                 {
-                    for (int i = k + 1; i <= j; i++)
+                    for (int j = i; j <= textLength / 2; j++) 
                     {
-                        part = ArrayString[k..i];
-                        char[] p = new char[part.Length];
-                        Array.Copy(part, p, part.Length);
-                        Array.Reverse(p, 0, p.Length);
-                        string pp = String.Join("", p);
-                        string ppart = String.Join("", part);
-                        if (pp == ppart && part.Length >= Palindrome.Length)
+                        string textPartLeft = text[i..(textLength - j)];
+                        string textPartRight = text[j..(textLength - i)];
+                        if (IsPalindrome(textPartRight) && palindrome.Length < textPartRight.Length)
                         {
-                            Palindrome = part;
+                            palindrome = textPartRight;
                         }
-                    }
-                    for (int i = j - 1; i > 0; i--)
-                    {
-                        part = ArrayString[i..j];
-                        char[] p = new char[part.Length];
-                        Array.Copy(part, p, part.Length);
-                        Array.Reverse(p, 0, p.Length);
-                        string pp = String.Join("", p);
-                        string ppart = String.Join("", part);
-                        if (pp == ppart && part.Length >= Palindrome.Length)
+                        if (IsPalindrome(textPartLeft) && palindrome.Length < textPartLeft.Length)
                         {
-                            Palindrome = part;
+                            palindrome = textPartLeft;
                         }
                     }
                 }
-                return String.Join("", Palindrome);
+                return palindrome;
             }
             else
             {
-                return String.Empty;
+                return "";
             }
+        }
+        static bool IsPalindrome(string mess)
+        {
+            for (int i = 0, k = mess.Length - 1; i < mess.Length / 2 && k >= mess.Length / 2; i++, k--)
+            {
+                if (mess[i] != mess[k])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }   
 }
-;
