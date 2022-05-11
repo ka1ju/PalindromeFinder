@@ -8,7 +8,6 @@ namespace ForFindPalindromes
         static void Main(string[] args)
         {
             string x = "";
-
             Console.WriteLine("Hello, this is my biggest palindrome search app. \n" +
                    "If u want to close the app u may enter \"!stop\"");
 
@@ -29,12 +28,12 @@ namespace ForFindPalindromes
             {
                 int textLength = text.Length;
                 string palindrome = text[0..1];
-                for (int i = 0; i < textLength; i++)
+                for (int i = 0; i <= textLength / 2; i++)
                 {
-                    for (int j = i; j <= textLength / 2; j++) 
+                    for (int j = i; j < textLength - i; j++) 
                     {
-                        string textPartLeft = text[i..(textLength - j)];
-                        string textPartRight = text[j..(textLength - i)];
+                        string textPartLeft = text[i..^j];
+                        string textPartRight = text[j..^i];
                         if (IsPalindrome(textPartRight) && palindrome.Length < textPartRight.Length)
                         {
                             palindrome = textPartRight;
@@ -54,7 +53,7 @@ namespace ForFindPalindromes
         }
         static bool IsPalindrome(string mess)
         {
-            for (int i = 0, k = mess.Length - 1; i < mess.Length / 2 && k >= mess.Length / 2; i++, k--)
+            for (int i = 0, k = mess.Length - 1; i < mess.Length; i++, k--)
             {
                 if (mess[i] != mess[k])
                 {
